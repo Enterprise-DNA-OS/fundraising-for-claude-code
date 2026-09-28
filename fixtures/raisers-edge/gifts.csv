@@ -1,0 +1,3 @@
+Gift ID,Gift Reference,Constituent ID,Campaign ID,Fund ID,Appeal ID,Pledge ID,Currency,Gift Amount,Gift Date,Gift Type,Benefit Received,Payment Reference
+G100,Spring payment,RE100,C100,F100,A100,P100,NZD,500.25,2026-09-20,Pay-Cash,No,BANK-IMPORT-100
+G101,Spring books,RE101,C100,F100,A100,,NZD,125.50,2026-09-21,Gift-in-Kind,No,IN-KIND-101

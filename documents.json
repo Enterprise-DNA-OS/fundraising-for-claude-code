@@ -1,11 +1,62 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "donation-receipt-draft",
+    "title": "DRAFT donation receipt worksheet",
+    "for_each": "select id,name from gifts where status='received'",
+    "file": "id",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Receipt blockers",
+        "note": "NOT VALID FOR TAX CLAIMS. Resolve every blocker and complete the issuance checks below.",
+        "sql": "select case when blockers='' then 'Recorded checks clear. Authorised review and issuance still required.' else blockers end as review_required from receipt_checks where id=$1"
+      },
+      {
+        "title": "Donation details",
+        "sql": "select name as draft_reference,donor,currency,amount,gift_date from receipt_checks where id=$1"
+      },
+      {
+        "title": "Receiving organisation",
+        "sql": "select organisation,country,tax_number,charity_number from receipt_checks where id=$1"
+      },
+      {
+        "title": "Authorised person",
+        "sql": "select authorised_name,authorised_role from receipt_checks where id=$1",
+        "note": "Confirm eligibility and required signature. Non-cash gifts need specialist review."
+      },
+      {
+        "title": "Before issue",
+        "sql": "select 'Print on official letterhead, allocate a unique receipt number, and obtain the authorised signature for NZ. Mark subsequent copies COPY or REPLACEMENT.' as required_action where $1::uuid is not null"
+      }
+    ]
+  },
+  {
+    "name": "pledge-reminder-draft",
+    "title": "DRAFT pledge reminder for review",
+    "for_each": "select id,name from pledges where status='open'",
+    "file": "id",
+    "sections": [
+      {
+        "title": "Remaining promise",
+        "sql": "select name,donor,currency,promised,received,balance,due_date from pledge_balances where id=$1",
+        "note": "Internal worksheet only. Check preferences and current donor circumstances before contact."
+      }
+    ]
+  },
+  {
+    "name": "campaign-statement",
+    "title": "Campaign statement for trustees",
+    "for_each": "select id,name from campaigns",
+    "file": "id",
+    "sections": [
+      {
+        "title": "Cash and promises",
+        "sql": "select name,currency,goal,received,outstanding,cash_gap,end_date from campaign_results where id=$1",
+        "note": "Outstanding promises are separate from received cash. In-kind gifts and void records are excluded from cash totals."
+      },
+      {
+        "title": "Gifts",
+        "sql": "select g.name,c.name donor,g.currency,g.amount,g.gift_date,g.gift_type,g.status from gifts g join constituents c on c.id=g.constituent_id where g.campaign_id=$1 order by g.gift_date"
+      }
     ]
   }
 ]

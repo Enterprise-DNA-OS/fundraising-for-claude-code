@@ -1,15 +1,15 @@
 ---
-description: "Read docs/compliance"
+description: "Review purposes and restrictions"
 ---
 
-# compliance
+# funds
 
-Read docs/compliance.md. Separate statutory receipt fields from internal contact and restriction policies. Summarise every exception.
+Review purposes and restrictions.
 
 Run:
 
 ```bash
-npm run fundraising -- compliance --json
+npm run fundraising -- funds --json
 ```
 
 Read fresh records. Preserve currency and source references. Do not invent data, payments, receipts or sends. This recipe never sends, publishes or processes money. Present the result in plain language and name unresolved exceptions.

@@ -1,13 +1,35 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Fundraising for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Fundraising week",
+    "subtitle": "Read-only snapshot. Fictional demo until you import your own records.",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Pledges due",
+        "sql": "select name,donor,currency,balance,due_date from pledge_balances where balance>0 and status='open' and due_date<=current_date+30 order by due_date"
+      },
+      {
+        "title": "Stewardship and permission",
+        "sql": "select name,donor,channel,due_date,contact_status from stewardship_queue order by due_date"
+      },
+      {
+        "title": "Campaign progress",
+        "sql": "select name,currency,goal,received,outstanding,cash_gap from campaign_results order by name"
+      }
+    ]
+  },
+  {
+    "name": "governance",
+    "title": "Trustee fundraising review",
+    "sections": [
+      {
+        "title": "Restricted gifts received",
+        "note": "Receipts only, not available fund balance. Expenditure remains in your accounts.",
+        "sql": "select name,restricted,purpose,currency,received from fund_totals order by name"
+      },
+      {
+        "title": "Record exceptions",
+        "sql": "select * from compliance_findings order by rule,record"
       }
     ]
   }

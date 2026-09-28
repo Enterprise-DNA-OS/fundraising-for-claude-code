@@ -1,0 +1,44 @@
+name: Verify fundraising workflows
+on: [push, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  embedded:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run demo
+      - run: npm run view
+      - run: npm run docs
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: fundraising_test
+          POSTGRES_DB: fundraising_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:fundraising_test@localhost:5432/fundraising_test?sslmode=disable

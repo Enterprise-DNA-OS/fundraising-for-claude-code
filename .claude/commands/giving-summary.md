@@ -1,15 +1,15 @@
 ---
-description: "Read docs/compliance"
+description: "Summarise received cash by donor and currency, excluding void and in-kind gifts"
 ---
 
-# compliance
+# giving-summary
 
-Read docs/compliance.md. Separate statutory receipt fields from internal contact and restriction policies. Summarise every exception.
+Summarise received cash by donor and currency, excluding void and in-kind gifts.
 
 Run:
 
 ```bash
-npm run fundraising -- compliance --json
+npm run fundraising -- giving-summary --json
 ```
 
 Read fresh records. Preserve currency and source references. Do not invent data, payments, receipts or sends. This recipe never sends, publishes or processes money. Present the result in plain language and name unresolved exceptions.

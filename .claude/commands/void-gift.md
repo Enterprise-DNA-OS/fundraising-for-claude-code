@@ -1,15 +1,15 @@
 ---
-description: "Read docs/compliance"
+description: "Read the gift and pledge first"
 ---
 
-# compliance
+# void-gift
 
-Read docs/compliance.md. Separate statutory receipt fields from internal contact and restriction policies. Summarise every exception.
+Read the gift and pledge first. Mark a mistaken record void with the documented reason. This never sends a refund or deletes history.
 
 Run:
 
 ```bash
-npm run fundraising -- compliance --json
+npm run fundraising -- void-gift <gift> <reason> --json
 ```
 
 Read fresh records. Preserve currency and source references. Do not invent data, payments, receipts or sends. This recipe never sends, publishes or processes money. Present the result in plain language and name unresolved exceptions.

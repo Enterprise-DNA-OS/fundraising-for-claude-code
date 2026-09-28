@@ -1,115 +1,122 @@
-<h1 align="center">Fundraising for Claude Code</h1>
+# Fundraising for Claude Code
 
-<p align="center">
-  <strong>The open-source donor and fundraising management system that is just a database and Claude Code.</strong>
-</p>
+Donors, gifts, pledges, appeals and stewardship in a database you own. Built for NZ and Australian charities. MIT licensed. Works with Claude Code, Codex, OpenCode or Cursor.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free. Run the demo and map your exports. | Your fields, rules, donor history and screens. | Installed, connected and operated through Omni by Enterprise DNA. |
+| [Quick start](#quick-start) | [Get your version built](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=raisers-edge&utm_source=github&utm_medium=customise) | [Book Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_campaign=raisers-edge&utm_source=github&utm_medium=managed) |
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Raiser's Edge NXT data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=raisers-edge">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/raisers-edge?utm_source=github&utm_medium=readme&utm_campaign=raisers-edge">How it works</a></td>
-  </tr>
-</table>
+Custom installation: a setup fee, then a retainer. Hosting and agent usage have their own costs.
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-raisers-edge">Instead of Raiser's Edge NXT</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
+## The weekly work
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
+Review overdue pledges, plan donor calls, acknowledge gifts, report campaign progress and prepare trustee paperwork. Contact preferences travel with the donor. Cash, in-kind gifts and unpaid pledges remain separate. Currency never disappears from a total. Payment processing stays with your provider.
 
----
-
-## What is this
-
-Fundraising for Claude Code does the job you pay Raiser's Edge NXT for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Raiser's Edge NXT dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Raiser's Edge NXT per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=raisers-edge).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
+Blackbaud's [pricing page](https://www.blackbaud.com/pricing), checked 28 September 2026, asks for an organisation-specific quote and publishes no Raiser’s Edge NXT amount. Compare your actual renewal quote to the workflows you use. This is an owned donor operations base, not full NXT parity.
 
 ## Quick start
 
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
+Node 20 or later, on Windows or Linux:
 
 ```bash
 git clone https://github.com/Enterprise-DNA-OS/fundraising-for-claude-code.git
 cd fundraising-for-claude-code
 npm install
 npm run demo
+npm test
+npm run view
+npm run docs
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Open the folder in your agent. Ask which pledges need attention this week. Harbour Literacy Trust is fictional. Its dates are relative to the first seed. Re-seeding does not reset changes. Its organisation tax identifiers are fake and receipt eligibility starts unverified.
 
-### Use it with your own Postgres or Supabase
+PGlite stores the local database in .data/db, or DATA_DIR. DATABASE_URL selects hosted Postgres. For real donor data start with a fresh database, run migrate, then import without seeding. Configure scoped access, verified TLS, private storage and tested backups before sharing. One local PGlite process at a time.
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
+## Commands
 
-## The commands
+35 CLI commands and 37 slash recipes. Each CLI command supports --json. [Arguments and behaviours](docs/cli.md).
 
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
+- /organisations: List receiving charities and identity verification flags.
+- /constituents: List donors and suppression flags.
+- /gifts: Read recorded gifts, dates, amounts, evidence and void status.
+- /campaigns: Compare received cash, outstanding promises and the gap to each campaign goal.
+- /funds: Review purposes and restrictions.
+- /appeals: Compare cash receipts and appeal costs within each currency.
+- /pledges: Read promises and remaining balances.
+- /pledges-due: Review overdue promises and those due in the next 30 days. Use the recorded balance, not the original promise.
+- /call-cycle: Review actions due this week. Include blocked and unknown permission in the report, but do not contact those donors.
+- /attention: Find donors with overdue actions or gifts older than 365 days.
+- /lapsed-donors: Read the lapsed donor list, excluding deceased and globally suppressed donors. Channel permission still needs checking.
+- /thank-you-queue: List unacknowledged gifts with email permission status. Do not infer that a message was sent.
+- /fund-balances: Report money received into each fund. These are receipt totals, not available balances after spending.
+- /receipt-review: Read docs/compliance.md. Report receipt blockers with the record reference. Do not claim that a clear record is a legally issued receipt.
+- /compliance: Read docs/compliance.md. Separate statutory receipt fields from internal contact and restriction policies. Summarise every exception.
+- /actions: Review due dates and actual completion dates.
+- /relationships: Show donor connections and relationship types.
+- /preferences: Read channel status and its supporting evidence.
+- /audit: Read the local change history.
+- /giving-summary: Summarise received cash by donor and currency, excluding void and in-kind gifts.
+- /donor: Read the donor, gifts, promises, actions and relationships. If ambiguous, show the candidates and stop.
+- /weekly-review: Combine pledges-due, call-cycle and thank-you-queue. Write the Monday priorities: promise, owner, date, contact permission and next action. Never combine currencies.
+- /add: Read docs/cli.md for allowed fields and resolve foreign keys from current reads. Add only factual operator input, then read back the new record.
+- /log: Create the next action in the donor history. This does not record a message as sent or a promise as paid.
+- /complete-action: Record actual work and its outcome. Do not complete a task based on a drafted message.
+- /preference: Record a verified preference with source evidence. Never infer permission from a gift or an email address.
+- /suppress: Record a requested global contact suppression and retain the reason.
+- /acknowledge: Record acknowledgement actually performed outside this system. It does not issue a tax receipt.
+- /void-gift: Read the gift and pledge first. Mark a mistaken record void with the documented reason. This never sends a refund or deletes history.
+- /draft-thanks: Draft an email acknowledgement only when the email preference allows it. Open the file in drafts/ and review it. Never send.
+- /draft-pledge: Read the pledge balance and preference. Draft the conversation in drafts/. Never send or charge.
+- /draft-receipt: Read docs/compliance.md. Run receipt-review first. The result in drafts/ is explicitly not valid for tax claims. The operator verifies identity, letterhead, numbering and signature before any issuance elsewhere.
+- /import: Read docs/replace-raisers-edge.md. Preview without --apply, reconcile the counts and separate currency/type totals, then apply the same bundle on instruction.
+- /export: Export the full base record set, audit and import provenance into a new file. Protect donor data. This does not replace tested database backups.
+- /help: List the CLI commands and open docs/cli.md for arguments.
+- /customise: Add a field or rule through a tested numbered migration.
+- /new-view: Add a read-only dashboard from your own records.
 
-| Command | What it does |
-|---|---|
-| `/...` | ... |
+## Ten questions beyond a fixed dashboard
 
-## Instead of raisers-edge
+Every question below is answered by the base today. Raiser’s Edge supports configurable queries too. We do not claim these questions are impossible there. Your rules and the analysis stay editable in your own system.
 
-<!-- TODO(author): how to bring data across from Raiser's Edge NXT; link docs/replace-raisers-edge.md -->
+1. Which unpaid pledges fall due in the next month? `npm run fundraising -- pledges-due`
+2. Which promised gift is overdue despite a partial payment? `npm run fundraising -- pledges-due`
+3. Which donor calls are overdue and which are blocked? `npm run fundraising -- call-cycle`
+4. Who last gave more than a year ago and has an overdue action? `npm run fundraising -- lapsed-donors`
+5. Which gifts still need a personal thank-you? `npm run fundraising -- thank-you-queue`
+6. How far is each campaign from its cash goal without counting unpaid pledges? `npm run fundraising -- campaigns`
+7. How much cash arrived for each restricted purpose? `npm run fundraising -- fund-balances`
+8. What did each appeal raise after its recorded costs? `npm run fundraising -- appeals`
+9. Which donation records lack the details needed to prepare a receipt? `npm run fundraising -- receipt-review`
+10. What has each donor given in each currency? `npm run fundraising -- giving-summary`
 
-## Architecture
+## Your first hour: ten things to ask for
 
-```
-fundraising-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
-```
+1. Put our charity's name, logo and colours on the paperwork.
+2. Show the overdue promises and their remaining amounts.
+3. Explain why the suppressed donor should not receive a draft.
+4. Draft a thank-you for Aroha's latest gift.
+5. Explain the missing receipt details.
+6. Show how much cash came into each restricted fund.
+7. Preview the sample export and reconcile its totals.
+8. Add our donor relationship field through a migration.
+9. Build a trustee view with separate currency totals.
+10. Export a complete snapshot for a reconciliation review.
 
-## Built for coding agents
+## Paperwork and views
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+Change brand.json once. npm run docs creates donation-receipt worksheets, pledge reminder worksheets and campaign statements under docs-out/. Every receipt is visibly a draft and is not valid for tax claims. An authorised person verifies eligibility, signs and issues the final receipt elsewhere. npm run view creates the week and governance snapshots under views/. /new-view uses that same renderer. No messages send.
 
-## Contributing
+[Compliance and receipt rules](docs/compliance.md) cite Inland Revenue and ATO guidance and label internal policies separately. [Why no front end](docs/why-no-front-end.md) explains mobile, offline and shared-access requirements.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+## Bring your records
 
-## Want it installed and run for you?
+Follow the [Raiser’s Edge export and mapping guide](docs/replace-raisers-edge.md). A prepared CSV bundle imports with one command. Preview first, then use --apply after counts and totals reconcile. IDs protect repeat imports. Changed source records fail for review instead of overwriting local changes. The entire import rolls back if any row fails.
 
-Enterprise DNA installs Fundraising for Claude Code for your business, migrates your Raiser's Edge NXT data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+Online payment forms, tokens, bank feeds, gift splits, soft credits, membership and event records, wealth data, attachments and signed receipts need a separately scoped mapping or their original archive. Pledges have one due date per commitment. Shared deployment and production privacy controls are configured per charity. This base does not issue receipts, take payments or produce statutory returns.
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=raisers-edge)
-- Read more: [enterprisedna.co/omni/instead-of/raisers-edge](https://enterprisedna.co/omni/instead-of/raisers-edge?utm_source=github&utm_medium=readme&utm_campaign=raisers-edge)
+## Verification
 
-## License
+npm test uses a temporary database, seeds twice, exercises every CLI command and checks currency separation, overpayment prevention, rollback, repeat import, consent suppression, draft receipts, exports and branded documents. Windows and Linux use the same Node scripts and portable paths. The CI workflow runs both and tests a PostgreSQL database separately.
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+MIT. Built by Enterprise DNA. Not affiliated with Blackbaud or Anthropic. [Omni by Enterprise DNA](https://enterprisedna.co/omni/instead-of/raisers-edge?utm_source=github&utm_medium=readme&utm_campaign=raisers-edge).

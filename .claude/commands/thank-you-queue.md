@@ -1,15 +1,15 @@
 ---
-description: "Read docs/compliance"
+description: "List unacknowledged gifts with email permission status"
 ---
 
-# compliance
+# thank-you-queue
 
-Read docs/compliance.md. Separate statutory receipt fields from internal contact and restriction policies. Summarise every exception.
+List unacknowledged gifts with email permission status. Do not infer that a message was sent.
 
 Run:
 
 ```bash
-npm run fundraising -- compliance --json
+npm run fundraising -- thank-you-queue --json
 ```
 
 Read fresh records. Preserve currency and source references. Do not invent data, payments, receipts or sends. This recipe never sends, publishes or processes money. Present the result in plain language and name unresolved exceptions.
